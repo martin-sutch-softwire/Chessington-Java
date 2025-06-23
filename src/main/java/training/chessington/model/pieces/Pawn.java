@@ -31,6 +31,16 @@ public class Pawn extends AbstractPiece {
             }
         }
 
+        Coordinates leftDiagonal = from.plus(direction, -1);
+        Coordinates rightDiagonal = from.plus(direction, 1);
+
+        if (board.isWithinBounds(leftDiagonal) && board.get(leftDiagonal) != null && board.get(leftDiagonal).getColour() != colour) {
+            moves.add(new Move(from, leftDiagonal));
+        }
+        if (board.isWithinBounds(rightDiagonal) && board.get(rightDiagonal) != null && board.get(rightDiagonal).getColour() != colour) {
+            moves.add(new Move(from, rightDiagonal));
+        }
+
         return moves;
     }
 }
