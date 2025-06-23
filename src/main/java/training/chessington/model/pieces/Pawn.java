@@ -22,21 +22,22 @@ public class Pawn extends AbstractPiece {
         Coordinates moveOne = from.plus(direction, 0);
         Coordinates moveTwo = from.plus(direction * 2, 0);
 
-        boolean spaceEmpty = board.get(moveOne) == null;
+        boolean emptyOneAhead = board.get(moveOne) == null;
+        boolean emptyTwoAhead = board.get(moveTwo) == null;
 
-        // if space one ahead is free, run next line 
-        if (spaceEmpty) {
+        if (emptyOneAhead) {
             moves.add(new Move(from, moveOne));
         }
 
-        if (direction == 1 && from.getRow() == 1) {
-            moves.add(new Move(from, moveTwo));
+        if (emptyTwoAhead) {
+            if (direction == 1 && from.getRow() == 1) {
+                moves.add(new Move(from, moveTwo));
+            };
+            
+            if (direction == -1 && from.getRow() == 6) {
+                moves.add(new Move(from, moveTwo));
+            };
         };
-        if (direction == -1 && from.getRow() == 6) {
-            moves.add(new Move(from, moveTwo));
-        };
-
-        System.out.println(board.toString());
 
         return moves;
     }
