@@ -26,7 +26,7 @@ public class Pawn extends AbstractPiece {
         if (board.isWithinBounds(oneAhead) && board.get(oneAhead) == null) {
             moves.add(new Move(from, oneAhead));
 
-            if (from.getRow() == startRow && board.isWithinBounds(twoAhead) && board.get(twoAhead) == null) {
+            if (from.getRow() == startRow && board.get(twoAhead) == null) {
                 moves.add(new Move(from, twoAhead));
             }
         }
