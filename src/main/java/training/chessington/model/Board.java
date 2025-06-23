@@ -49,4 +49,11 @@ public class Board {
     public void placePiece(Coordinates coords, Piece piece) {
         board[coords.getRow()][coords.getCol()] = piece;
     }
+
+    public boolean isWithinBounds(Coordinates coords) {
+        int row = coords.getRow();
+        int col = coords.getCol();
+        return row >= 0 && row < 8 && col >= 0 && col < 8;        
+    }  
+
 }
