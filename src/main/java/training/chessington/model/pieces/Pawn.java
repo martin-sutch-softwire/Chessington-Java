@@ -19,25 +19,24 @@ public class Pawn extends AbstractPiece {
 
         int direction = colour == PlayerColour.BLACK ? 1 : -1 ;
 
-        Coordinates moveOneAhead = from.plus(direction, 0);
-        Coordinates moveTwoAhead = from.plus(direction * 2, 0);
+        Coordinates oneAhead = from.plus(direction, 0);
+        Coordinates twoAhead = from.plus(direction * 2, 0);
 
-        boolean emptyOneAhead = board.get(moveOneAhead) == null;
-        boolean emptyTwoAhead = board.get(moveTwoAhead) == null;
+        boolean isStartingRow = (direction == 1 && from.getRow() == 1) || (direction == -1 && from.getRow() == 6);
+        boolean isSpaceOneAhead = (direction == 1 && from.getRow() < 7) || (direction == -1 && from.getRow() > 0);
 
-        if (emptyOneAhead) {
-            moves.add(new Move(from, moveOneAhead));
-        }
-
-        if (emptyTwoAhead) {
-            if (direction == 1 && from.getRow() == 1) {
-                moves.add(new Move(from, moveTwoAhead));
-            };
+        if (isSpaceOneAhead) {
+            boolean isEmptyOneAhead = board.get(oneAhead) == null || false;
+            boolean isEmptyTwoAhead = board.get(twoAhead) == null || false;
             
-            if (direction == -1 && from.getRow() == 6) {
-                moves.add(new Move(from, moveTwoAhead));
+            if (isEmptyOneAhead && isSpaceOneAhead) {
+                moves.add(new Move(from, oneAhead));
+            }
+            
+            if (isEmptyTwoAhead && isStartingRow) {
+                moves.add(new Move(from, twoAhead));
             };
-        };
+        }; 
 
         return moves;
     }
