@@ -18,25 +18,18 @@ public class Pawn extends AbstractPiece {
         List<Move> moves = new ArrayList<>();
 
         int direction = colour == PlayerColour.BLACK ? 1 : -1 ;
+        int startRow = colour == PlayerColour.BLACK ? 1 : 6;
 
         Coordinates oneAhead = from.plus(direction, 0);
         Coordinates twoAhead = from.plus(direction * 2, 0);
 
-        boolean isStartingRow = (direction == 1 && from.getRow() == 1) || (direction == -1 && from.getRow() == 6);
-        boolean isSpaceOneAhead = (direction == 1 && from.getRow() < 7) || (direction == -1 && from.getRow() > 0);
+        if (board.isWithinBounds(oneAhead) && board.get(oneAhead) == null) {
+            moves.add(new Move(from, oneAhead));
 
-        if (isSpaceOneAhead) {
-            boolean isEmptyOneAhead = board.get(oneAhead) == null || false;
-            boolean isEmptyTwoAhead = board.get(twoAhead) == null || false;
-            
-            if (isEmptyOneAhead && isSpaceOneAhead) {
-                moves.add(new Move(from, oneAhead));
-            }
-            
-            if (isEmptyTwoAhead && isStartingRow) {
+            if (from.getRow() == startRow && board.isWithinBounds(twoAhead) && board.get(twoAhead) == null) {
                 moves.add(new Move(from, twoAhead));
-            };
-        }; 
+            }
+        }
 
         return moves;
     }
