@@ -22,10 +22,19 @@ public class Rook extends AbstractPiece {
         Coordinates left = from.plus(0,-1);
         Coordinates right = from.plus(0,1);
 
-        moves.add(new Move(from, up));
-        moves.add(new Move(from, down));
-        moves.add(new Move(from, left));
-        moves.add(new Move(from, right));
+        //check if the moves are within bounds of the board
+        if (board.isWithinBounds(up) && board.get(up) == null) {
+            moves.add(new Move(from, up));
+        }
+        if (board.isWithinBounds(down) && board.get(down) == null) {
+            moves.add(new Move(from, down));
+        }
+        if (board.isWithinBounds(left) && board.get(left) == null) {
+            moves.add(new Move(from, left));
+        }
+        if (board.isWithinBounds(right) && board.get(right) == null) {
+            moves.add(new Move(from, right));
+        }
 
         return moves;
     }

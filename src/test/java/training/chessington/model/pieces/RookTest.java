@@ -30,4 +30,19 @@ public class RookTest {
             new Move(coords, coords.plus(-1, 0))
         );
     }
+    @Test
+    public void rookCannotMoveOffOfBoard() {
+        // Arrange
+        Board board = Board.empty();
+        Piece rook = new Rook(PlayerColour.WHITE);
+        Coordinates coords = new Coordinates(0, 0);
+        board.placePiece(coords, rook);
+
+        // Act
+        List<Move> moves = rook.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).doesNotContain(new Move(coords, coords.plus(-1, 0)));
+        assertThat(moves).doesNotContain(new Move(coords, coords.plus(0, -1)));
+    }
 }
