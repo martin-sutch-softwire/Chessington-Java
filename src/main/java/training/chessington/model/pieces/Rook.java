@@ -15,6 +15,18 @@ public class Rook extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        return new ArrayList<>();
+        List<Move> moves = new ArrayList<>();
+
+        Coordinates up = from.plus(1,0);
+        Coordinates down = from.plus(-1,0);
+        Coordinates left = from.plus(0,-1);
+        Coordinates right = from.plus(0,1);
+
+        moves.add(new Move(from, up));
+        moves.add(new Move(from, down));
+        moves.add(new Move(from, left));
+        moves.add(new Move(from, right));
+
+        return moves;
     }
 }
