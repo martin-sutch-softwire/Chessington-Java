@@ -91,7 +91,7 @@ public class RookTest {
         assertThat(moves).doesNotContain(new Move(coords, coords.plus(0, 1)));
     }
     @Test
-    public void rookCannotMovePastOccupiedSquareOfSameColour() {
+    public void rookCannotMovePastOccupiedSquareOfEitherColour() {
         // Arrange
         Board board = Board.empty();
         Piece rook = new Rook(PlayerColour.WHITE);
@@ -99,11 +99,14 @@ public class RookTest {
         board.placePiece(coords, rook);
         Piece friendlyPiece = new Rook(PlayerColour.WHITE);
         board.placePiece(coords.plus(0, 2), friendlyPiece);
+        Piece enemyPiece = new Rook(PlayerColour.BLACK);
+        board.placePiece(coords.plus(2, 0), enemyPiece);
 
         // Act
         List<Move> moves = rook.getAllowedMoves(coords, board);
 
         // Assert
         assertThat(moves).doesNotContain(new Move(coords, coords.plus(0, 3)));
+        assertThat(moves).doesNotContain(new Move(coords, coords.plus(3, 0)));
     }
 }

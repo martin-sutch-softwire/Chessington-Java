@@ -17,10 +17,24 @@ public class Rook extends AbstractPiece {
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
         List<Move> moves = new ArrayList<>();
 
-        //Check moves to right
-        for (int col = from.getCol() + 1; col < 8; col++) {
-            Coordinates target = new Coordinates(from.getRow(), col);
-            if (board.isWithinBounds(target)) {
+        int[][] directions = {
+            {0, 1},
+            {0, -1},
+            {1, 0},
+            {-1, 0}
+        };
+
+        for (int[] dir : directions) {
+            int row = from.getRow();
+            int col = from.getCol();
+
+            while (true) {
+                row += dir[0];
+                col += dir[1];
+                Coordinates target = new Coordinates(row, col);
+
+                if (!board.isWithinBounds(target)) break;
+
                 Piece pieceAtTarget = board.get(target);
                 if (pieceAtTarget == null) {
                     moves.add(new Move(from, target));
@@ -30,65 +44,10 @@ public class Rook extends AbstractPiece {
                     }
                     break;
                 }
-            } else {
-                break;
             }
         }
 
-        // Check moves to left
-        for (int col = from.getCol() - 1; col >= 0; col--) {
-            Coordinates target = new Coordinates(from.getRow(), col);
-            if (board.isWithinBounds(target)) {
-                Piece pieceAtTarget = board.get(target);
-                if (pieceAtTarget == null) {
-                    moves.add(new Move(from, target));
-                } else {
-                    if (pieceAtTarget.getColour() != this.colour) {
-                        moves.add(new Move(from, target));
-                    }
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
+    return moves;
+}
 
-        // Check moves downwards
-        for (int row = from.getRow() + 1; row < 8; row++) {
-            Coordinates target = new Coordinates(row, from.getCol());
-            if (board.isWithinBounds(target)) {
-                Piece pieceAtTarget = board.get(target);
-                if (pieceAtTarget == null) {
-                    moves.add(new Move(from, target));
-                } else {
-                    if (pieceAtTarget.getColour() != this.colour) {
-                        moves.add(new Move(from, target));
-                    }
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
-
-        // Check moves upwards
-        for (int row = from.getRow() - 1; row >= 0; row--) {
-            Coordinates target = new Coordinates(row, from.getCol());
-            if (board.isWithinBounds(target)) {
-                Piece pieceAtTarget = board.get(target);
-                if (pieceAtTarget == null) {
-                    moves.add(new Move(from, target));
-                } else {
-                    if (pieceAtTarget.getColour() != this.colour) {
-                        moves.add(new Move(from, target));
-                    }
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
-
-        return moves;
-    }
 }
