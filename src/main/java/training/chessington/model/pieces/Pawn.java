@@ -7,6 +7,7 @@ import training.chessington.model.PlayerColour;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Pawn extends AbstractPiece {
     public Pawn(PlayerColour colour) {
@@ -34,12 +35,13 @@ public class Pawn extends AbstractPiece {
         Coordinates leftDiagonal = from.plus(direction, -1);
         Coordinates rightDiagonal = from.plus(direction, 1);
 
-        if (board.isWithinBounds(leftDiagonal) && board.get(leftDiagonal) != null && board.get(leftDiagonal).getColour() != colour) {
-            moves.add(new Move(from, leftDiagonal));
-        }
-        if (board.isWithinBounds(rightDiagonal) && board.get(rightDiagonal) != null && board.get(rightDiagonal).getColour() != colour) {
-            moves.add(new Move(from, rightDiagonal));
-        }
+        List<Move> validDiagonals = Stream.of(leftDiagonal, rightDiagonal)
+                .filter(board::isWithinBounds)
+                .filter(coord -> board.get(coord) != null && board.get(coord).getColour() != colour)
+                .map(coord -> new Move(from, coord))
+                .toList();
+
+        moves.addAll(validDiagonals);
 
         return moves;
     }
