@@ -22,17 +22,23 @@ public class Rook extends AbstractPiece {
             if (col != from.getCol()) {
                 Coordinates target = new Coordinates(from.getRow(), col);
                 if (board.isWithinBounds(target)) {
+                    Piece pieceAtTarget = board.get(target);
+                    if (pieceAtTarget == null || pieceAtTarget.getColour() != this.colour) {
                         moves.add(new Move(from, target));
+                    }
                 }
             }
         }
-
+        
         // Check vertical moves
         for (int row = 0; row < 8; row++) {
             if (row != from.getRow()) {
                 Coordinates target = new Coordinates(row, from.getCol());
                 if (board.isWithinBounds(target)) {
+                    Piece pieceAtTarget = board.get(target);
+                    if (pieceAtTarget == null || pieceAtTarget.getColour() != this.colour) {
                         moves.add(new Move(from, target));
+                    }
                 }
             }
         }
