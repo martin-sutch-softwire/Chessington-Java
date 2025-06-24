@@ -23,7 +23,7 @@ public class RookTest {
         List<Move> moves = rook.getAllowedMoves(coords, board);
 
         // Assert
-        assertThat(moves).containsExactlyInAnyOrder(
+        assertThat(moves).contains(
             new Move(coords, coords.plus(0, 1)),
             new Move(coords, coords.plus(0, -1)),
             new Move(coords, coords.plus(1, 0)),
@@ -44,5 +44,34 @@ public class RookTest {
         // Assert
         assertThat(moves).doesNotContain(new Move(coords, coords.plus(-1, 0)));
         assertThat(moves).doesNotContain(new Move(coords, coords.plus(0, -1)));
+    }
+    @Test
+    public void rookCanMoveUntilBoundsInAllDirections() {
+        // Arrange
+        Board board = Board.empty();
+        Piece rook = new Rook(PlayerColour.WHITE);
+        Coordinates coords = new Coordinates(3, 3);
+        board.placePiece(coords, rook);
+
+        // Act
+        List<Move> moves = rook.getAllowedMoves(coords, board);
+
+        // Assert
+       assertThat(moves).containsExactlyInAnyOrder(
+            new Move(coords, coords.plus(0, 1)),
+            new Move(coords, coords.plus(0, 2)),
+            new Move(coords, coords.plus(0, 3)),
+            new Move(coords, coords.plus(0, 4)),
+            new Move(coords, coords.plus(1, 0)),
+            new Move(coords, coords.plus(2, 0)),
+            new Move(coords, coords.plus(3, 0)),
+            new Move(coords, coords.plus(4, 0)),
+            new Move(coords, coords.plus(-1, 0)),
+            new Move(coords, coords.plus(-2, 0)),
+            new Move(coords, coords.plus(-3, 0)),
+            new Move(coords, coords.plus(0, -1)),
+            new Move(coords, coords.plus(0, -2)),
+            new Move(coords, coords.plus(0, -3))
+        );
     }
 }

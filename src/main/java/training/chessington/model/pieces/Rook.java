@@ -17,23 +17,24 @@ public class Rook extends AbstractPiece {
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
         List<Move> moves = new ArrayList<>();
 
-        Coordinates up = from.plus(1,0);
-        Coordinates down = from.plus(-1,0);
-        Coordinates left = from.plus(0,-1);
-        Coordinates right = from.plus(0,1);
+        // Check horizontal moves
+        for (int col = 0; col < 8; col++) {
+            if (col != from.getCol()) {
+                Coordinates target = new Coordinates(from.getRow(), col);
+                if (board.isWithinBounds(target)) {
+                        moves.add(new Move(from, target));
+                }
+            }
+        }
 
-        //check if the moves are within bounds of the board
-        if (board.isWithinBounds(up) && board.get(up) == null) {
-            moves.add(new Move(from, up));
-        }
-        if (board.isWithinBounds(down) && board.get(down) == null) {
-            moves.add(new Move(from, down));
-        }
-        if (board.isWithinBounds(left) && board.get(left) == null) {
-            moves.add(new Move(from, left));
-        }
-        if (board.isWithinBounds(right) && board.get(right) == null) {
-            moves.add(new Move(from, right));
+        // Check vertical moves
+        for (int row = 0; row < 8; row++) {
+            if (row != from.getRow()) {
+                Coordinates target = new Coordinates(row, from.getCol());
+                if (board.isWithinBounds(target)) {
+                        moves.add(new Move(from, target));
+                }
+            }
         }
 
         return moves;
