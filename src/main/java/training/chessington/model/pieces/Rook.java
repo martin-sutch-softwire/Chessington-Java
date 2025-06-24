@@ -17,29 +17,75 @@ public class Rook extends AbstractPiece {
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
         List<Move> moves = new ArrayList<>();
 
-        // Check horizontal moves
-        for (int col = 0; col < 8; col++) {
-            if (col != from.getCol()) {
-                Coordinates target = new Coordinates(from.getRow(), col);
-                if (board.isWithinBounds(target)) {
-                    Piece pieceAtTarget = board.get(target);
-                    if (pieceAtTarget == null || pieceAtTarget.getColour() != this.colour) {
+        //Check moves to right
+        for (int col = from.getCol() + 1; col < 8; col++) {
+            Coordinates target = new Coordinates(from.getRow(), col);
+            if (board.isWithinBounds(target)) {
+                Piece pieceAtTarget = board.get(target);
+                if (pieceAtTarget == null) {
+                    moves.add(new Move(from, target));
+                } else {
+                    if (pieceAtTarget.getColour() != this.colour) {
                         moves.add(new Move(from, target));
                     }
+                    break;
                 }
+            } else {
+                break;
             }
         }
-        
-        // Check vertical moves
-        for (int row = 0; row < 8; row++) {
-            if (row != from.getRow()) {
-                Coordinates target = new Coordinates(row, from.getCol());
-                if (board.isWithinBounds(target)) {
-                    Piece pieceAtTarget = board.get(target);
-                    if (pieceAtTarget == null || pieceAtTarget.getColour() != this.colour) {
+
+        // Check moves to left
+        for (int col = from.getCol() - 1; col >= 0; col--) {
+            Coordinates target = new Coordinates(from.getRow(), col);
+            if (board.isWithinBounds(target)) {
+                Piece pieceAtTarget = board.get(target);
+                if (pieceAtTarget == null) {
+                    moves.add(new Move(from, target));
+                } else {
+                    if (pieceAtTarget.getColour() != this.colour) {
                         moves.add(new Move(from, target));
                     }
+                    break;
                 }
+            } else {
+                break;
+            }
+        }
+
+        // Check moves downwards
+        for (int row = from.getRow() + 1; row < 8; row++) {
+            Coordinates target = new Coordinates(row, from.getCol());
+            if (board.isWithinBounds(target)) {
+                Piece pieceAtTarget = board.get(target);
+                if (pieceAtTarget == null) {
+                    moves.add(new Move(from, target));
+                } else {
+                    if (pieceAtTarget.getColour() != this.colour) {
+                        moves.add(new Move(from, target));
+                    }
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+
+        // Check moves upwards
+        for (int row = from.getRow() - 1; row >= 0; row--) {
+            Coordinates target = new Coordinates(row, from.getCol());
+            if (board.isWithinBounds(target)) {
+                Piece pieceAtTarget = board.get(target);
+                if (pieceAtTarget == null) {
+                    moves.add(new Move(from, target));
+                } else {
+                    if (pieceAtTarget.getColour() != this.colour) {
+                        moves.add(new Move(from, target));
+                    }
+                    break;
+                }
+            } else {
+                break;
             }
         }
 
